@@ -7,12 +7,11 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 
-export type StatusUser = 'active' | 'inactive';
+export type StatusUser = 'active' | 'inactive' | 'waiting';
 export type TypeDocuments = 'CC' | 'CE' | 'PEP';
-export type UserRoles = 'administrative' | 'superAdmin' | 'doctor' | 'user';
 
 @Entity()
-export class User {
+export class Prospect {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -31,20 +30,14 @@ export class User {
   @Column({ type: 'varchar', length: 255, nullable: true, unique: true })
   email: string;
 
-  @Column({ nullable: true, type: 'varchar', length: '100', unique: true })
+  @Column({ type: 'varchar', length: '100', unique: true })
   phone: string;
-
-  @Column({ nullable: true, type: 'varchar', length: '100' })
-  password: string;
 
   @Column({ type: 'enum', enum: ['active', 'inactive'] })
   status: StatusUser;
 
-  @Column({
-    type: 'enum',
-    enum: ['administrative', 'superAdmin', 'doctor', 'user'],
-  })
-  role: UserRoles;
+  @Column({ type: 'text' })
+  observation: string;
 
   @CreateDateColumn()
   createAt: Date;
