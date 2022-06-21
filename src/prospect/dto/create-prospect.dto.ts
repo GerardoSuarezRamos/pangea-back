@@ -1,6 +1,6 @@
 import { StatusUser, TypeDocuments } from '../entities/prospect.entity';
 
-export class CreateUserDto {
+export class CreateProspectDto {
   first_name: string;
   last_name: string;
   document_id: number;
