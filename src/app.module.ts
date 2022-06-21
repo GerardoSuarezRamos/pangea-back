@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ProspectModule } from './prospect/prospect.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { ProceduresModule } from './procedures/procedures.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -20,6 +22,8 @@ import { ProspectModule } from './prospect/prospect.module';
     AuthModule,
     UsersModule,
     ProspectModule,
+    NotificationsModule,
+    ProceduresModule,
   ],
   controllers: [AppController],
   providers: [AppService],
