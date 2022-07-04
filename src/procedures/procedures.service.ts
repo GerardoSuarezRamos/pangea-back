@@ -1,4 +1,4 @@
-import { Repository, Connection, getConnection } from 'typeorm';
+import { Repository, Connection } from 'typeorm';
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,6 +14,7 @@ export class ProceduresService {
     private procedureRepository: Repository<Procedure>,
     private connection: Connection,
   ) {}
+
   query = this.connection.getRepository('procedure');
 
   async create(createProcedureDto: CreateProcedureDto) {
@@ -55,12 +56,7 @@ export class ProceduresService {
     procedure.type = updateProcedureDto.type;
 
     try {
-      await getConnection()
-        .createQueryBuilder()
-        .update(Procedure)
-        .set({ ...procedure })
-        .where('id = :id', { id: id })
-        .execute();
+      this.procedureRepository.update(id, procedure);
     } catch (e) {
       return e.message;
     }

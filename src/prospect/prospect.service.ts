@@ -10,7 +10,7 @@ import { Prospect } from './entities/prospect.entity';
 export class ProspectService {
   constructor(
     @InjectRepository(Prospect)
-    private usersRepository: Repository<Prospect>,
+    private prospectRepository: Repository<Prospect>,
     private connection: Connection,
   ) {}
 
@@ -23,7 +23,9 @@ export class ProspectService {
     prospect.last_name = createProspectDto.last_name;
     prospect.email = createProspectDto.email;
     prospect.status = createProspectDto.status;
+    prospect.phone = createProspectDto.phone;
     prospect.document_id = createProspectDto.document_id;
+    prospect.observation = createProspectDto.observation;
     prospect.type_document = createProspectDto.type_document;
 
     try {
@@ -36,24 +38,12 @@ export class ProspectService {
   }
 
   findAll(): Promise<Prospect[]> {
-    return this.usersRepository.find();
+    return this.prospectRepository.find();
   }
 
   async findOne(id: number): Promise<Prospect> {
     try {
-      return await this.usersRepository.findOneBy({ id: id });
-    } catch (err) {
-      console.log(err.messaage);
-    }
-  }
-
-  async findOneByEmailAndPassword(email: string): Promise<Prospect> {
-    try {
-      const user = await this.usersRepository.findOneBy({ email: email });
-      if (!user) {
-        throw new NotFoundException();
-      }
-      return user;
+      return await this.prospectRepository.findOneBy({ id: id });
     } catch (err) {
       console.log(err.messaage);
     }
@@ -76,17 +66,14 @@ export class ProspectService {
     prospect.last_name = updateTaskDto.last_name;
     prospect.email = updateTaskDto.email;
     prospect.status = updateTaskDto.status;
+    prospect.phone = updateTaskDto.phone;
     prospect.document_id = updateTaskDto.document_id;
     prospect.type_document = updateTaskDto.type_document;
+    prospect.observation = updateTaskDto.observation;
     prospect.deleteAt = updateTaskDto.deleteAt;
 
     try {
-      await getConnection()
-        .createQueryBuilder()
-        .update(Prospect)
-        .set({ ...prospect })
-        .where('id = :id', { id: id })
-        .execute();
+      await this.prospectRepository.update(id, prospect);
     } catch (e) {
       return e.message;
     }

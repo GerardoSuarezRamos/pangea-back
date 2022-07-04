@@ -8,4 +8,5 @@ export class CreateProspectDto {
   type_document: TypeDocuments;
   email: string;
   phone: string;
+  observation: string;
 }
