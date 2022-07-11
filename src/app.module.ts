@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { ProspectModule } from './prospect/prospect.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { ProceduresModule } from './procedures/procedures.module';
+import { SurgeryModule } from './surgery/surgery.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -24,6 +25,7 @@ import { ProceduresModule } from './procedures/procedures.module';
     ProspectModule,
     NotificationsModule,
     ProceduresModule,
+    SurgeryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
