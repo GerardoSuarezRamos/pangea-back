@@ -38,7 +38,7 @@ export class ProcedureRequest {
   @Column({ type: 'varchar', length: 255 })
   zip_code: string;
 
-  @Column({ type: 'date', length: 255 })
+  @Column({ type: 'date' })
   date_birthday: Date;
 
   @Column({ type: 'varchar', length: 255 })
@@ -67,7 +67,7 @@ export class ProcedureRequest {
 
   @ManyToOne(() => Procedure, (procedure) => procedure.id)
   @JoinColumn()
-  procedures: Procedure[];
+  procedure: Procedure;
 
   @CreateDateColumn()
   createAt: Date;

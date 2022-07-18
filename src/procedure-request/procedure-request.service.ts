@@ -13,7 +13,7 @@ export class ProcedureRequestService {
     private connection: Connection,
   ) {}
 
-  query = this.connection.getRepository('procedureRequest');
+  query = this.connection.getRepository('procedure_request');
   procedureRepository = this.connection.getRepository('procedure');
 
   async create(createProcedureRequestDto: CreateProcedureRequestDto) {
@@ -50,12 +50,13 @@ export class ProcedureRequestService {
       procedureRequest.imc = createProcedureRequestDto.imc;
 
       // procedure relations interest
-      procedureRequest.procedures = procedure as any;
+      procedureRequest.procedure = procedure as any;
 
       await this.query.save<ProcedureRequest>(procedureRequest);
       return procedureRequest;
     } catch (e) {
-      return e.message;
+      console.log(e);
+      return { success: false, message: e.message };
     }
   }
 
@@ -65,14 +66,60 @@ export class ProcedureRequestService {
 
   async findOne(id: number): Promise<ProcedureRequest> {
     try {
-      return await this.procedureRequestRepository.findOneBy({ id: id });
+      const procedureRequest = await this.procedureRequestRepository.findOneBy({
+        id: id,
+      });
+      console.log(procedureRequest);
+
+      const procedure = await this.procedureRepository.findOneByOrFail({
+        id: procedureRequest,
+      });
+
+      procedureRequest.procedure = procedure as any;
+
+      return procedureRequest;
     } catch (err) {
       console.log(err.messaage);
     }
   }
 
-  async update(id: number, updateProcedureDto: UpdateProcedureDto) {
-    const procedure: ProcedureRequest = new ProcedureRequest();
+  async update(
+    id: number,
+    updateProcedureRequestDto: UpdateProcedureRequestDto,
+  ) {
+    const procedureRequest: ProcedureRequest = new ProcedureRequest();
+    const procedure = await this.procedureRepository.findOneByOrFail({
+      id: updateProcedureRequestDto.procedureId,
+    });
+
+    if (!procedure)
+      return {
+        success: false,
+        message: 'El Procedimiento no se ha encontrado',
+      };
+
+    // personal data
+    procedureRequest.name = updateProcedureRequestDto.name;
+    procedureRequest.gender = updateProcedureRequestDto.gender;
+    procedureRequest.date_birthday = updateProcedureRequestDto.date_birthday;
+    procedureRequest.phone = updateProcedureRequestDto.phone;
+    procedureRequest.email = updateProcedureRequestDto.email;
+    procedureRequest.country = updateProcedureRequestDto.country;
+    procedureRequest.city = updateProcedureRequestDto.city;
+    procedureRequest.zip_code = updateProcedureRequestDto.zip_code;
+    procedureRequest.status = updateProcedureRequestDto.status;
+
+    // medical data
+    procedureRequest.alcohol = updateProcedureRequestDto.alcohol;
+    procedureRequest.smoke = updateProcedureRequestDto.smoke;
+    procedureRequest.weight = updateProcedureRequestDto.weight;
+    procedureRequest.height = updateProcedureRequestDto.height;
+    procedureRequest.blood_type = updateProcedureRequestDto.blood_type;
+    procedureRequest.drugs = updateProcedureRequestDto.drugs;
+    procedureRequest.imc = updateProcedureRequestDto.imc;
+
+    // procedure relations interest
+    procedureRequest.procedure = procedure as any;
 
     try {
       this.procedureRequestRepository.update(id, procedure);
