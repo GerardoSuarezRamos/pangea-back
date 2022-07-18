@@ -10,7 +10,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-type GenderUser = 'Male' | 'Female';
+export type GenderUser = 'Male' | 'Female';
 
 @Entity()
 export class ProcedureRequest {
@@ -24,20 +24,50 @@ export class ProcedureRequest {
   gender: GenderUser;
 
   @Column({ type: 'varchar', length: 255 })
+  phone: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  email: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  country: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  city: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  zip_code: string;
+
+  @Column({ type: 'date', length: 255 })
+  date_birthday: Date;
+
+  @Column({ type: 'varchar', length: 255 })
+  imc: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  smoke: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  drugs: string;
+
+  @Column({ type: 'varchar', length: 255 })
+  alcohol: string;
+
+  @Column({ type: 'varchar', length: 100 })
   weight: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 100 })
   height: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 100 })
   blood_type: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 100 })
   status: string;
 
   @ManyToOne(() => Procedure, (procedure) => procedure.id)
   @JoinColumn()
-  procedure: Procedure;
+  procedures: Procedure[];
 
   @CreateDateColumn()
   createAt: Date;
