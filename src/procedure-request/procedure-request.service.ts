@@ -69,13 +69,13 @@ export class ProcedureRequestService {
       const procedureRequest = await this.procedureRequestRepository.findOneBy({
         id: id,
       });
-      console.log(procedureRequest);
+      // console.log(procedureRequest);
 
-      const procedure = await this.procedureRepository.findOneByOrFail({
-        id: procedureRequest,
-      });
+      // const procedure = await this.procedureRepository.findOneByOrFail({
+      //   id: procedureRequest,
+      // });
 
-      procedureRequest.procedure = procedure as any;
+      // procedureRequest.procedure = procedure as any;
 
       return procedureRequest;
     } catch (err) {
