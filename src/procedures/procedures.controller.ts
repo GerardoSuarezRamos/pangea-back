@@ -43,6 +43,7 @@ export class ProceduresController {
   ) {
     return this.proceduresService.update(+id, updateProcedureDto);
   }
+
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {

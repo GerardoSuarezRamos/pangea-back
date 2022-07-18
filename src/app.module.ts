@@ -8,6 +8,7 @@ import { ProspectModule } from './prospect/prospect.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { ProceduresModule } from './procedures/procedures.module';
 import { SurgeryModule } from './surgery/surgery.module';
+import { ProcedureRequestModule } from './procedure-request/procedure-request.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -26,6 +27,7 @@ import { SurgeryModule } from './surgery/surgery.module';
     NotificationsModule,
     ProceduresModule,
     SurgeryModule,
+    ProcedureRequestModule,
   ],
   controllers: [AppController],
   providers: [AppService],

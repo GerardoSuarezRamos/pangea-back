@@ -15,6 +15,7 @@ import {
 export class Surgery {
   @PrimaryGeneratedColumn()
   id: number;
+
   @ManyToOne(() => Procedure, (procedure) => procedure.id)
   @JoinColumn()
   procedure: Procedure;

@@ -65,9 +65,7 @@ export class ProceduresService {
 
   async remove(id: string): Promise<void> {
     try {
-      const user: UpdateProcedureDto = await this.findOne(+id);
-
-      await this.update(+id, { ...user, deleteAt: new Date() });
+      await this.query.delete(id);
     } catch (err) {
       console.log(err.message);
     }
